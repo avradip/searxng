@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import hashlib
-import random
 import string
 import uuid
 from flask_babel import gettext
+import secrets
 
 # required answerer attribute
 # specifies which search query keywords triggers this answerer
@@ -15,7 +15,7 @@ random_string_letters = string.ascii_lowercase + string.digits + string.ascii_up
 
 
 def random_characters():
-    return [random.choice(random_string_letters) for _ in range(random.randint(8, 32))]
+    return [secrets.choice(random_string_letters) for _ in range(secrets.SystemRandom().randint(8, 32))]
 
 
 def random_string():
@@ -23,11 +23,11 @@ def random_string():
 
 
 def random_float():
-    return str(random.random())
+    return str(secrets.SystemRandom().random())
 
 
 def random_int():
-    return str(random.randint(-random_int_max, random_int_max))
+    return str(secrets.SystemRandom().randint(-random_int_max, random_int_max))
 
 
 def random_sha256():
@@ -41,7 +41,7 @@ def random_uuid():
 
 
 def random_color():
-    color = "%06x" % random.randint(0, 0xFFFFFF)
+    color = "%06x" % secrets.SystemRandom().randint(0, 0xFFFFFF)
     return f"#{color.upper()}"
 
 

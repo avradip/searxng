@@ -42,7 +42,6 @@ from ipaddress import (
 )
 
 import string
-import random
 import flask
 
 from searx import logger
@@ -53,6 +52,7 @@ from ._helpers import (
     get_network,
     get_real_ip,
 )
+import secrets
 
 TOKEN_LIVE_TIME = 600
 """Livetime (sec) of limiter's CSS token."""
@@ -149,6 +149,6 @@ def get_token() -> str:
     if token:
         token = token.decode('UTF-8')
     else:
-        token = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(16))
+        token = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(16))
         redis_client.set(TOKEN_KEY, token, ex=TOKEN_LIVE_TIME)
     return token
