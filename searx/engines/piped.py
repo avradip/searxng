@@ -48,10 +48,10 @@ Implementations
 from __future__ import annotations
 
 import time
-import random
 from urllib.parse import urlencode
 import datetime
 from dateutil import parser
+import secrets
 
 # about
 about = {
@@ -94,7 +94,7 @@ def _backend_url() -> str:
 
     url = engines['piped'].backend_url  # type: ignore
     if isinstance(url, list):
-        url = random.choice(url)
+        url = secrets.choice(url)
     return url
 
 

@@ -2,7 +2,7 @@
 """Pixiv (images)"""
 
 from urllib.parse import urlencode
-import random
+import secrets
 
 # Engine metadata
 about = {
@@ -46,7 +46,7 @@ def response(resp):
     for item in data["body"]["illust"]["data"]:
 
         image_url = item["url"]
-        pixiv_proxy = random.choice(pixiv_image_proxies)
+        pixiv_proxy = secrets.choice(pixiv_image_proxies)
         proxy_image_url = image_url.replace("https://i.pximg.net", pixiv_proxy)
         proxy_full_image_url = (
             proxy_image_url.replace("/c/250x250_80_a2/", "/")

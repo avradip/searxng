@@ -11,7 +11,6 @@ import types
 from typing import Optional, Union, Any, Set, List, Dict, MutableMapping, Tuple, Callable
 from numbers import Number
 from os.path import splitext, join
-from random import choice
 from html.parser import HTMLParser
 from html import escape
 from urllib.parse import urljoin, urlparse
@@ -26,6 +25,7 @@ from searx.version import VERSION_TAG
 from searx.sxng_locales import sxng_locales
 from searx.exceptions import SearxXPathSyntaxException, SearxEngineXPathException
 from searx import logger
+import secrets
 
 
 logger = logger.getChild('utils')
@@ -81,7 +81,7 @@ def gen_useragent(os_string: Optional[str] = None) -> str:
 
     See searx/data/useragents.json
     """
-    return USER_AGENTS['ua'].format(os=os_string or choice(USER_AGENTS['os']), version=choice(USER_AGENTS['versions']))
+    return USER_AGENTS['ua'].format(os=os_string or secrets.choice(USER_AGENTS['os']), version=secrets.choice(USER_AGENTS['versions']))
 
 
 class _HTMLTextExtractorException(Exception):

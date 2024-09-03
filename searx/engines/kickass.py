@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Kickass Torrent (Videos, Music, Files)"""
-
-import random
 from operator import itemgetter
 from urllib.parse import quote
 
@@ -14,6 +12,7 @@ from searx.utils import (
     get_torrent_size,
     int_or_zero,
 )
+import secrets
 
 about = {
     "website": 'https://kickasstorrents.to',
@@ -32,7 +31,7 @@ base_url = 'https://kickasstorrents.to'
 
 
 def request(query, params):
-    params['base_url'] = random.choice(base_url) if isinstance(base_url, list) else base_url
+    params['base_url'] = secrets.choice(base_url) if isinstance(base_url, list) else base_url
     params['url'] = params['base_url'] + f'/usearch/{quote(query)}/{params["pageno"]}/'
 
     return params
