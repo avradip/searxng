@@ -3,9 +3,9 @@
 """
 
 import time
-import random
 from urllib.parse import quote_plus, urlparse
 from dateutil import parser
+import secrets
 
 # about
 about = {
@@ -35,7 +35,7 @@ def request(query, params):
     }
 
     if isinstance(base_url, list):
-        params["base_url"] = random.choice(base_url)
+        params["base_url"] = secrets.choice(base_url)
     else:
         params["base_url"] = base_url
 
