@@ -12,10 +12,9 @@ import json
 import re
 from urllib.parse import urlparse, urljoin
 from packaging.version import parse
-
-import requests
 from lxml import html
 from searx.data import data_dir
+from security import safe_requests
 
 DATA_FILE = data_dir / 'useragents.json'
 
@@ -38,7 +37,7 @@ useragents = {
 
 
 def fetch_firefox_versions():
-    resp = requests.get(URL, timeout=2.0)
+    resp = safe_requests.get(URL, timeout=2.0)
     if resp.status_code != 200:
         # pylint: disable=broad-exception-raised
         raise Exception("Error fetching firefox versions, HTTP code " + resp.status_code)  # type: ignore
