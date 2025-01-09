@@ -6,6 +6,7 @@ import shlex
 import subprocess
 import logging
 import importlib
+from security import safe_command
 
 # fallback values
 # if there is searx.version_frozen module, and it is not possible to get the git tag
@@ -36,7 +37,7 @@ def subprocess_run(args, **kwargs):
     kwargs["stderr"] = subprocess.PIPE
     # raise CalledProcessError if returncode is non-zero
     kwargs["check"] = True
-    proc = subprocess.run(args, **kwargs)  # pylint: disable=subprocess-run-check
+    proc = safe_command.run(subprocess.run, args, **kwargs)  # pylint: disable=subprocess-run-check
     return proc.stdout.strip()
 
 

@@ -81,6 +81,7 @@ from subprocess import Popen, PIPE
 from threading import Thread
 
 from searx import logger
+from security import safe_command
 
 
 engine_type = 'offline'
@@ -157,7 +158,7 @@ def _get_results_from_process(results, cmd, pageno):
     leftover = ''
     count = 0
     start, end = __get_results_limits(pageno)
-    with Popen(cmd, stdout=PIPE, stderr=PIPE, env=environment_variables) as process:
+    with safe_command.run(Popen, cmd, stdout=PIPE, stderr=PIPE, env=environment_variables) as process:
         line = process.stdout.readline()
         while line:
             buf = leftover + line.decode('utf-8')
