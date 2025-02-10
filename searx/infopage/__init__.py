@@ -55,7 +55,7 @@ class InfoPage:
     def content(self):
         """Content of the page (rendered in a Jinja context)"""
         ctx = self.get_ctx()
-        template = jinja2.Environment().from_string(self.raw_content)
+        template = jinja2.Environment(autoescape=True).from_string(self.raw_content)
         return template.render(**ctx)
 
     @cached_property
