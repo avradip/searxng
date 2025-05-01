@@ -8,6 +8,7 @@ from datetime import datetime
 from lxml import etree
 from lxml.etree import XPath
 from searx.utils import eval_xpath, eval_xpath_list, eval_xpath_getindex
+import lxml.etree
 
 # about
 about = {
@@ -60,7 +61,7 @@ def request(query, params):
 
 def response(resp):
     results = []
-    dom = etree.fromstring(resp.content)
+    dom = etree.fromstring(resp.content, parser=lxml.etree.XMLParser(resolve_entities=False))
     for entry in eval_xpath_list(dom, xpath_entry):
         title = eval_xpath_getindex(entry, xpath_title, 0).text
 
