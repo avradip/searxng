@@ -3,7 +3,6 @@
 
 import asyncio
 import logging
-import random
 from ssl import SSLContext
 import threading
 from typing import Any, Dict
@@ -13,6 +12,7 @@ from httpx_socks import AsyncProxyTransport
 from python_socks import parse_proxy_url, ProxyConnectionError, ProxyTimeoutError, ProxyError
 
 from searx import logger
+import secrets
 
 # Optional uvloop (support Python 3.6)
 try:
@@ -47,7 +47,7 @@ def shuffle_ciphers(ssl_context):
     """
     c_list = httpx._config.DEFAULT_CIPHERS.split(':')  # pylint: disable=protected-access
     sc_list, c_list = c_list[:3], c_list[3:]
-    random.shuffle(c_list)
+    secrets.SystemRandom().shuffle(c_list)
     ssl_context.set_ciphers(":".join(sc_list + c_list))
 
 
