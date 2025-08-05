@@ -7,6 +7,7 @@ from urllib.parse import urlencode, urljoin
 from lxml import html, etree
 
 from searx.utils import extract_text, eval_xpath_list, eval_xpath_getindex
+import lxml.etree
 
 # about
 about = {
@@ -38,7 +39,7 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    xmldom = etree.fromstring(resp.content)
+    xmldom = etree.fromstring(resp.content, parser=lxml.etree.XMLParser(resolve_entities=False))
     xmlsearchresult = eval_xpath_getindex(xmldom, '//data', 0)
     dom = html.fragment_fromstring(xmlsearchresult.text, create_parent='div')
     for link in eval_xpath_list(dom, '//a'):
